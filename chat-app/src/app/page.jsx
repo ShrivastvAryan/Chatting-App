@@ -1,9 +1,9 @@
 import React from 'react'
-import ChatApp from '@/Components/Home'
+import HealthcarePlatformPage from '@/Components/Home'
 
 const page = () => {
   return (
-   <ChatApp/>
+   <HealthcarePlatformPage/>
   )
 }
 
