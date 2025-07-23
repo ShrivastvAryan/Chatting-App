@@ -1,13 +1,14 @@
 const express=require('express')
 const app=express()
 const PORT=4000
+const cors = require('cors');
 const mongoDb=require('./db')
 const authrouter=require('./router/Auth-router')
 
 app.use(express.json())
 app.use(cors())
 
-mongoDb.connect()
+mongoDb()
 
 app.use('/api/auth',authrouter)
 

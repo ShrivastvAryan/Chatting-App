@@ -1,8 +1,7 @@
-const{userLogin,userSignup}=require('../controllers/Auth-controller')
-
 const express=require('express')
 const app=express()
 const router=express.Router()
+const{userLogin,userSignup}=require('../controllers/Auth-controller')
 
 app.use(express.json());
 

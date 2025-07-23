@@ -1,29 +1,31 @@
 const User=require('../modal/Auth-modal')
-const bycrypt=require('bcryptjs')
+const bcrypt=require('bcryptjs')
 
 //SignupLogic
 
-const userSignup=async()=>{
+const userSignup=async(req,res)=>{
    try {
 
-      const{userId,name,email,password}=req.body
+      const{name,userId,email,password}=req.body
 
-       const userExist = await User.findOne({ $or: [{ email }, { userId }] });
+       console.log("Received body:", req.body); 
+
+       const userExist = await User.findOne({email});
 
       if(userExist){
          return res.status(400).json({ message: "User already exists" });
       }
 
       const userCreate=await User.create({
-        name:'',
-        userId:'',
-        email:'',
-        password:''
+        name,
+        userId,
+        email,
+        password
       })
 
       const token= await userCreate.generateToken()
-       res.status(201).json({message:"User created successfully",token,user:userCreated});
-        console.log("User created successfully",userCreated);
+       res.status(201).json({message:"User created successfully",token,user:userCreate});
+        console.log("User created successfully",userCreate);
 
    } catch (error) {
     res.status(500).json({message:"Internal server error",error:error.message});
@@ -32,7 +34,7 @@ const userSignup=async()=>{
 
 //Function to handle login
 
-const userLogin=async()=>{
+const userLogin=async(req,res)=>{
     try {
 
         const { email, password } = req.body;

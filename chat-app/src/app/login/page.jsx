@@ -2,6 +2,7 @@
 import { useState } from 'react';
 
 import { Eye, EyeOff, MessageCircle } from 'lucide-react';
+import { Snackbar,Alert } from '@mui/material';
 
 export default function LoginPage() {
   const [formData, setFormData] = useState({
@@ -11,6 +12,32 @@ export default function LoginPage() {
   });
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+
+  const login = async () => {
+  try {
+    const response = await fetch('http://localhost:4000/api/auth/login', {
+      method: 'POST',
+      headers: {
+        Accept: "application/json",
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(formData),
+    });
+
+    const data = await response.json();
+
+    if (data.success) {
+      localStorage.setItem('auth-token', data.token);
+      alert('Login successful')
+    } else {
+      alert('fail in login')
+    }
+
+  } catch (error) {
+    console.error("Login error:", error);
+    
+  }
+};
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
